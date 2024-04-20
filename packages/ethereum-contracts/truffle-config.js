@@ -54,6 +54,7 @@ try {
 // }
 
 const ALIASES = {
+    "fhenix-testnet": ["fhenix"],
     "eth-mainnet": ["mainnet"],
     "eth-sepolia": ["sepolia"],
 
@@ -170,6 +171,21 @@ const E = (module.exports = {
         // You should run a client (like ganache-cli, geth or parity) in a separate terminal
         // tab if you use this network and you must also set the `host`, `port` and `network_id`
         // options below to some value.
+
+        //
+        // Fhenix Testnet: https://https:fhenix.io/
+        //
+        "fhenix-testnet": {
+            provider: () => new HDWalletProvider(
+                process.env.FHENIX_TESTNET_MNEMONIC,
+                process.env.FHENIX_TESTNET_PROVIDER_URL
+            ),
+            network_id: 42069,
+            gasPrice: 1e9, 
+            skipDryRun: true,
+            networkCheckTimeout: 60000,
+            timeoutBlocks: 200,
+        },
 
         //
         // ETHEREUM: https://ethereum.org/
@@ -377,6 +393,7 @@ const E = (module.exports = {
             // If SOLC environment variable is provided, assuming it is available as "solc", use it instead.
             // Ref, this maybe possible in the future: https://github.com/trufflesuite/truffle/pull/6007
             version: process.env.SOLC ? "native" : "0.8.23",
+            docker: true, // local sol compile runs out of memory
             settings: {
                 // See the solidity docs for advice about optimization and evmVersion
                 optimizer: {
